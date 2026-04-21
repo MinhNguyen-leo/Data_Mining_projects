@@ -1,0 +1,34 @@
+Bộ dữ liệu này phức tạp hơn với 19 cột, bao gồm các thông tin chi tiết về chuyến đi, địa điểm và các khoản phí
+Thông tin vận hành:
+VendorID: Mã nhà cung cấp thiết bị ghi âm chuyến đi (1: Creative Mobile Technologies; 2: VeriFone Inc.)
+
+tpep_pickup_datetime / tpep_dropoff_datetime: Thời điểm bắt đầu và kết thúc chuyến đi khi đồng hồ được kích hoạt/ngắt
+
+passenger_count: Số lượng hành khách trên xe (do tài xế nhập)
+
+trip_distance: Quãng đường chuyến đi tính bằng dặm (miles) theo đồng hồ taxi
+
+RateCodeID: Mã giá cước áp dụng (1: Standard, 2: JFK, 3: Newark, v.v.)
+
+Store_and_fwd_flag: Cờ hiệu cho biết dữ liệu chuyến đi có được lưu tạm trong bộ nhớ xe trước khi gửi về máy chủ hay không
+
+Thông tin địa lý:
+Pickup_longitude / Pickup_latitude: Kinh độ và vĩ độ nơi bắt đầu chuyến đi
+
+Dropoff_longitude / Dropoff_latitude: Kinh độ và vĩ độ nơi kết thúc chuyến đi
+
+Thông tin tài chính:
+Payment_type: Hình thức thanh toán (1: Thẻ tín dụng, 2: Tiền mặt, v.v.)
+
+Fare_amount: Giá cước tính theo thời gian và quãng đường
+
+Extra: Các khoản phụ phí (như phí giờ cao điểm 0.5 hoặc 1 cho ban đêm)
+MTA_tax: Thuế MTA 0.5$ tự động kích hoạt theo tỷ lệ cước
+
+Improvement_surcharge: Phụ phí cải thiện 0.3$ áp dụng từ năm 2015
+
+Tip_amount: Tiền tip (chỉ được tự động ghi nhận cho thanh toán bằng thẻ tín dụng)
+
+Tolls_amount: Tổng phí cầu đường đã trả trong chuyến đi
+
+Total_amount: Tổng số tiền hành khách phải trả (không bao gồm tiền tip bằng tiền mặt)

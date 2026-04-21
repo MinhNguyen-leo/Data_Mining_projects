@@ -1,0 +1,20 @@
+Bộ dữ liệu này bao gồm 9 cột dữ liệu chính, tập trung vào lưu lượng giao thông hàng giờ cùng các yếu tố môi trường
+Đây là dạng dữ liệu đa biến, tuần tự và chuỗi thời gian
+
+holiday: Chứa thông tin về các ngày lễ (như Labor Day) hoặc giá trị "None" nếu là ngày thường
+
+temp: Nhiệt độ trung bình tính bằng đơn vị Kelvin
+
+rain_1h: Lượng mưa tính bằng mm xảy ra trong một giờ
+
+snow_1h: Lượng tuyết tính bằng mm xảy ra trong một giờ
+
+clouds_all: Tỷ lệ phần trăm độ che phủ mây
+
+weather_main: Danh mục chính của thời tiết (ví dụ: Clouds, Clear, Rain, Snow, v.v.)
+
+weather_description: Mô tả chi tiết hơn về tình trạng thời tiết (ví dụ: scattered clouds, sky is clear, mist)
+
+date_time: Ngày và giờ thu thập dữ liệu (định dạng hàng giờ)
+
+traffic_volume: Lưu lượng giao thông hướng Tây tại trạm ATR 301 (đây thường là biến mục tiêu cho các bài toán dự báo)
