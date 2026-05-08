@@ -32,6 +32,9 @@ def clean_invalid_data(df):
     # Remove passenger_count = 0
     df = df[df['passenger_count'] > 0]
 
+    # Remove tpep_pickup_datetime = tpep_dropoff_datetime
+    df = df[df['tpep_pickup_datetime'] != df['tpep_dropoff_datetime']]
+
     return df
 
 def process_datetime(df):
@@ -64,6 +67,19 @@ def remove_outliers_duration(df):
 
     return df
 
+def remove_outlier_coords(taxi_df):
+    
+    nyc_min_lat, nyc_max_lat = 40.5774, 40.9176
+    nyc_min_lon, nyc_max_lon = -74.15, -73.7004
+
+    taxi_df = taxi_df[(taxi_df['pickup_latitude'] >= nyc_min_lat) & (taxi_df['pickup_latitude'] <= nyc_max_lat) &
+            (taxi_df['pickup_longitude'] >= nyc_min_lon) & (taxi_df['pickup_longitude'] <= nyc_max_lon) &
+            (taxi_df['dropoff_latitude'] >= nyc_min_lat) & (taxi_df['dropoff_latitude'] <= nyc_max_lat) &
+            (taxi_df['dropoff_longitude'] >= nyc_min_lon) & (taxi_df['dropoff_longitude'] <= nyc_max_lon)]
+    
+    return taxi_df
+
+
 # Chia khung giờ trong ngày thành 4 nhóm: morning, afternoon, evening, night    
 def create_time_features(df):
     df['pickup_hour'] = df['tpep_pickup_datetime'].dt.hour
@@ -86,9 +102,9 @@ def create_time_features(df):
     return df
 
     
-def filter_rate_code(df):
-    df = df[df['RatecodeID'] == 1]
-    return df
+# def filter_rate_code(df):
+#     df = df[df['RatecodeID'] == 1]
+#     return df
 
 # Tạo biến tip_amount chỉ tính tiền tip khi thanh toán bằng thẻ tín dụng (payment_type = 1), ngược lại = 0
 def process_tip(df):
@@ -107,6 +123,12 @@ def add_speed_feature(df):
     df = df[(df['speed'] > 1) & (df['speed'] < 100)]
     return df
 
+def create_fare_per_miles(df):
+    df['fare_per_miles'] = df['fare_amount'] / df['trip_distance']
+
+    df = df[df['fare_per_miles'] > 0]
+
+    return df
 
 def save_processed(df, output_path):
     df.to_csv(output_path, index=False)
@@ -116,8 +138,10 @@ def preprocess_taxi_df(df):
     df = process_datetime(df)
     df = add_speed_feature(df)
     df = create_time_features(df)
-    df = filter_rate_code(df)
+    df = create_fare_per_miles(df)
+    # df = filter_rate_code(df)
     df = process_tip(df)           
     df = remove_outliers_duration(df)
+    df = remove_outlier_coords(df)
 
     return df

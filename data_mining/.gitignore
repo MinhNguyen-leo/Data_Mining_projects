@@ -1,0 +1,5 @@
+yellow_tripdata_2016-03.csv
+anhut_test.ipynb
+src/anomaly_detection.ipynb
+data/processed/yellow_tripdata_2016-03_processed.csv
+src/__pycache__/
