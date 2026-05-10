@@ -130,6 +130,32 @@ def create_fare_per_miles(df):
 
     return df
 
+def drop_features(df):
+    drop_columns = [
+    'VendorID',
+    'store_and_fwd_flag',
+    'RatecodeID',
+    'payment_type',
+    'improvement_surcharge',
+    'mta_tax',
+    'extra',
+    'tip_amount',
+    'tolls_amount',
+    'total_amount'
+    ]
+
+    df = df.drop(columns=drop_columns)
+    
+    return df
+
+
+def create_fare_per_min(df):
+    df['fare_per_min'] = df['fare_amount'] / (df['trip_duration'] / 60)
+
+    df = df[df['fare_per_min'] > 0]
+
+    return df
+
 def save_processed(df, output_path):
     df.to_csv(output_path, index=False)
     
@@ -139,6 +165,7 @@ def preprocess_taxi_df(df):
     df = add_speed_feature(df)
     df = create_time_features(df)
     df = create_fare_per_miles(df)
+    df = create_fare_per_min(df)
     # df = filter_rate_code(df)
     df = process_tip(df)           
     df = remove_outliers_duration(df)
