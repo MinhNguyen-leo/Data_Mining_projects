@@ -1,5 +1,6 @@
 yellow_tripdata_2016-03.csv
 anhut_test.ipynb
+trip_duration_prediction_anhut.ipynb
 src/anomaly_detection.ipynb
 data/processed/yellow_tripdata_2016-03_processed.csv
 src/__pycache__/
