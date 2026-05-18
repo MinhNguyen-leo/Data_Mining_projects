@@ -61,8 +61,8 @@ def remove_outliers_duration(df):
 
     # 2. Quantile (cắt đuôi trên)
     df = df[
-        (df['trip_duration'] < df['trip_duration'].quantile(0.99)) &
-        (df['trip_distance'] < df['trip_distance'].quantile(0.99))
+        (df['trip_distance'] < df['trip_distance'].quantile(0.99)) &
+        (df['trip_duration'] < df['trip_duration'].quantile(0.99))
     ]
 
     return df
@@ -156,6 +156,24 @@ def create_fare_per_min(df):
 
     return df
 
+def create_traffic_level(df):
+    df['traffic_index'] = df['trip_duration'] / (df['trip_distance'] + 1e-6)
+
+    low = df['traffic_index'].quantile(0.33)
+    high = df['traffic_index'].quantile(0.66)
+
+    def label_traffic(x):
+        if x < low:
+            return 0  # low traffic
+        elif x < high:
+            return 1  # medium traffic
+        else:
+            return 2  # high traffic
+
+    df['traffic_level'] = df['traffic_index'].apply(label_traffic)
+
+    return df
+
 def save_processed(df, output_path):
     df.to_csv(output_path, index=False)
     
@@ -170,5 +188,7 @@ def preprocess_taxi_df(df):
     df = process_tip(df)           
     df = remove_outliers_duration(df)
     df = remove_outlier_coords(df)
+    df = drop_features(df)
+    df = create_traffic_level(df)
 
     return df
